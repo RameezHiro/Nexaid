@@ -321,8 +321,8 @@ firebase deploy
 | Name | Role |
 |---|---|
 | Shaikh Rameez | ML Engineer & Backend Lead |
-| Person 3 | Data Analytics |
-| Person 4 | Frontend Developer |
+| Member 1 | Data Analytics |
+| Member 2 | Frontend Developer |
 
 ---
 
