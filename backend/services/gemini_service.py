@@ -2,7 +2,7 @@ import json
 import os
 from google import genai
 
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("AIzaSyCaW2Ay22fp_MxQgiwgOVW0v65quZm9oZU")
 client = genai.Client(api_key=api_key)
 
 def extract_needs(raw_text: str, location: str) -> list:
