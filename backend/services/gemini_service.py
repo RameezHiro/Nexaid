@@ -2,6 +2,9 @@ import json
 import os
 from google import genai
 
+from dotenv import load_dotenv
+
+load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
@@ -39,7 +42,7 @@ def extract_needs(raw_text: str, location: str) -> list:
                 transport, education, other
     """
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-flash-latest",
         contents=prompt
     )
     text = response.text.strip()
@@ -76,7 +79,7 @@ def match_volunteer(need: dict, volunteers: list) -> dict:
     then location proximity, then availability.
     """
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-flash-latest",
         contents=prompt
     )
     text = response.text.strip()
@@ -107,7 +110,7 @@ def get_dashboard_summary(needs: list) -> dict:
     }}
     """
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-flash-latest",
         contents=prompt
     )
     text = response.text.strip()
