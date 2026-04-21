@@ -32,6 +32,12 @@ app.include_router(needs.router, prefix="/api/needs", tags=["needs"])
 app.include_router(volunteers.router, prefix="/api/volunteers", tags=["volunteers"])
 app.include_router(matches.router, prefix="/api/matches", tags=["matches"])
 
+
+@app.get("/")
+def home():
+    return {"message": "Nexaid backend is running"}
+
+    
 @app.get("/health")
 def health_check():
     return {
