@@ -5,41 +5,52 @@ from datetime import datetime
 
 router = APIRouter()
 
-@router.post("/{need_id}")
-async def create_match(need_id: str):
-    # Fetch need by id from needs collection
+@router.get("/suggest/{need_id}")
+async def suggest_matches(need_id: str):
+    # Fetch need
     all_needs = get_documents("needs")
     need = next((n for n in all_needs if n.get("id") == need_id), None)
-    
     if not need:
         raise HTTPException(status_code=404, detail="Need not found")
         
-    # Fetch all volunteers
     volunteers = get_documents("volunteers")
     if not volunteers:
-        raise HTTPException(status_code=400, detail="No volunteers registered yet")
+        return {"suggestions": []}
         
-    # Match using Gemini
-    match_result = match_volunteer(need, volunteers)
+    # Get top 3 from Gemini
+    raw_suggestions = match_volunteer(need, volunteers)
     
-    volunteer_id = match_result.get("volunteer_id")
+    # Enrich with volunteer details
+    enriched = []
+    for sug in raw_suggestions:
+        vol = next((v for v in volunteers if v.get("id") == sug.get("volunteer_id")), None)
+        if vol:
+            enriched.append({
+                **sug,
+                "volunteer_name": vol.get("name"),
+                "volunteer_skills": vol.get("skills", []),
+                "volunteer_location": vol.get("location")
+            })
+            
+    return {"suggestions": enriched}
+
+@router.post("/{need_id}")
+async def create_match(need_id: str, volunteer_id: str):
+    # This is now the 'confirm' endpoint
+    volunteers = get_documents("volunteers")
+    volunteer = next((v for v in volunteers if v.get("id") == volunteer_id), None)
     
-    # Save to matches collection
+    if not volunteer:
+        raise HTTPException(status_code=404, detail="Volunteer not found")
+        
     match_data = {
         "need_id": need_id,
         "volunteer_id": volunteer_id,
-        "match_reason": match_result.get("reason"),
-        "confidence_score": match_result.get("match_score"),
-        "urgency_flag": match_result.get("urgency_flag", False),
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
+        "status": "confirmed"
     }
     
     add_document("matches", match_data)
-    
-    # Update need status
     update_document("needs", need_id, {"status": "matched"})
     
-    # Fetch matched volunteer details
-    volunteer = next((v for v in volunteers if v.get("id") == volunteer_id), None)
-    
-    return {"match": match_data, "volunteer": volunteer}
+    return {"status": "success", "match": match_data}

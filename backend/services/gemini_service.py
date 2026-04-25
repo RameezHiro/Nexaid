@@ -1,10 +1,10 @@
 import json
 import os
 from google import genai
-
 from dotenv import load_dotenv
 
 load_dotenv()
+
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
@@ -27,7 +27,7 @@ def extract_needs(raw_text: str, location: str) -> list:
         "urgency": "critical",
         "category": "medical",
         "description": "Clear one line description",
-        "skills_required": ["Medical", "First Aid"],
+        "skills": ["Medical", "First Aid"],
         "estimated_people_affected": 5
       }}
     ]
@@ -42,7 +42,7 @@ def extract_needs(raw_text: str, location: str) -> list:
                 transport, education, other
     """
     response = client.models.generate_content(
-        model="gemini-flash-latest",
+        model="gemini-1.5-flash",
         contents=prompt
     )
     text = response.text.strip()
@@ -67,19 +67,20 @@ def match_volunteer(need: dict, volunteers: list) -> dict:
     Available volunteers:
     {json.dumps(volunteers, indent=2)}
     
-    Return this exact format:
-    {{
-      "volunteer_id": "exact_id_from_list",
-      "match_score": 85,
-      "reason": "Two sentence explanation of why this volunteer is the best match.",
-      "urgency_flag": true
-    }}
+    Return this exact format (JSON array of top 3):
+    [
+      {{
+        "volunteer_id": "exact_id_from_list",
+        "match_score": 95,
+        "reason": "Top alignment in skills and proximity."
+      }},
+      ...
+    ]
     
-    Match based on: skills alignment first, 
-    then location proximity, then availability.
+    Order by match_score descending.
     """
     response = client.models.generate_content(
-        model="gemini-flash-latest",
+        model="gemini-1.5-flash",
         contents=prompt
     )
     text = response.text.strip()
@@ -110,7 +111,7 @@ def get_dashboard_summary(needs: list) -> dict:
     }}
     """
     response = client.models.generate_content(
-        model="gemini-flash-latest",
+        model="gemini-1.5-flash",
         contents=prompt
     )
     text = response.text.strip()
