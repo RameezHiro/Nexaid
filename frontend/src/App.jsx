@@ -63,7 +63,7 @@ function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-center px-12 border-t border-slate-800 max-w-[1440px] mx-auto pt-12 space-y-8 md:space-y-0">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-white font-bold text-xl">Nexaid</div>
-          <p className="text-slate-400 font-body text-sm">© 2024 Nexaid. Algorithmic Coordination.</p>
+          <p className="text-slate-400 font-body text-sm">© 2026 Nexaid. Algorithmic Coordination.</p>
           <div className="flex items-center gap-2 mt-2 px-3 py-1 bg-white/5 rounded border border-white/10">
             <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
             <span className="text-[10px] font-label text-slate-300 uppercase tracking-widest">Powered by Google Gemini AI</span>
