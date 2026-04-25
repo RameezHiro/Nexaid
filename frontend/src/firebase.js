@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 
 // TROUBLESHOOTING: Using direct config object to bypass .env issues
 const firebaseConfig = {
-  apiKey: "AIzaSyBYQhVZ9DDVhCndainw2J1mvw6sX8o27Tg",
-  authDomain: "volunteerbridge-bb2b4.firebaseapp.com",
-  projectId: "volunteerbridge-bb2b4",
-  storageBucket: "volunteerbridge-bb2b4.firebasestorage.app",
-  messagingSenderId: "186856953359",
-  appId: "1:186856953359:web:b731b676ce454d9fcfb57a"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
