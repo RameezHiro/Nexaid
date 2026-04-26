@@ -1,5 +1,4 @@
 # Nexaid: AI-Powered Crisis Coordination Platform
-## Master Product Requirements Document (PRD) — v2.1 (Merged)
 
 ### 1. Executive Summary
 Nexaid is a mission-critical coordination engine designed for high-stakes humanitarian response. It utilizes Google’s most advanced AI models (Gemini PRO) to transform fragmented community reports into a unified, geographic, and analytical command view.
@@ -54,20 +53,9 @@ To eliminate the "Information Latency" in crisis response by providing NGOs with
 | `GET` | `/api/needs/active` | Live needs retrieval + AI Priority Summary |
 | `POST` | `/api/volunteers/register` | Identity & Skill Indexing |
 | `POST` | `/api/matches/{need_id}` | Gemini Semantic Matching → Deployment Confirmation |
-| `GET` | `/api/analytics` | Recharts/Pandas derived metrics & Skill Gap insights |
 
 ---
 
-### 6. Operational Roadmap (12-Day Mission Plan)
-
-- **Day 1-4 (Infrastructure)**: [COMPLETED] Firebase Auth, Map GIS, and Recharts integration.
-- **Day 5-6 (Deployment)**: Railway (Backend) and Firebase Hosting (Frontend) configuration.
-- **Day 7-8 (E2E Testing)**: Full system verification, CORS hardening, and AI prompt tuning.
-- **Day 9 (Rehearsal)**: Full team demo rehearsal.
-- **Day 10 (Media)**: Demo video recording.
-- **Day 11-12**: Submission & Final Launch.
-
----
-**Status**: ACTIVE (MISSION READY)
-**Last Updated**: 2026-04-25
+**Status**: ACTIVE
+**Last Updated**: 2026-04-26
 **Lead Architect**: Antigravity AI

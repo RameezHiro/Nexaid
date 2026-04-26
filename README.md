@@ -65,6 +65,8 @@ cd Nexaid
 
 # Backend Setup
 cd backend
+python -m venv venv
+venv\Scripts\activate  # On Windows (use `source venv/bin/activate` on Mac/Linux)
 pip install -r requirements.txt
 cp .env.example .env # Add your GEMINI_API_KEY
 
