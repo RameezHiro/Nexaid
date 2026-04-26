@@ -7,7 +7,7 @@ function CoordinatorDashboard() {
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview'); // tabs: overview, needs, logistics
-  
+
   // Matching States
   const [matchingModalOpen, setMatchingModalOpen] = useState(false);
   const [selectedNeed, setSelectedNeed] = useState(null);
@@ -20,7 +20,7 @@ function CoordinatorDashboard() {
 
   const fetchData = async () => {
     try {
-      const resp = await axios.get('http://127.0.0.1:8000/api/needs/active');
+      const resp = await axios.get('https://nexaid-production.up.railway.app/api/needs/active');
       setNeeds(resp.data.needs || []);
       setSummary(resp.data.summary);
     } catch (e) {
@@ -36,7 +36,7 @@ function CoordinatorDashboard() {
     setSuggestions([]);
     setMatchingLoading(true);
     try {
-      const resp = await axios.get(`http://127.0.0.1:8000/api/matches/suggest/${need.id}`);
+      const resp = await axios.get(`https://nexaid-production.up.railway.app/api/matches/suggest/${need.id}`);
       setSuggestions(resp.data.suggestions || []);
     } catch (e) {
       console.error(e);
@@ -47,7 +47,7 @@ function CoordinatorDashboard() {
 
   const handleConfirmMatch = async (volunteerId) => {
     try {
-      await axios.post(`http://127.0.0.1:8000/api/matches/${selectedNeed.id}?volunteer_id=${volunteerId}`);
+      await axios.post(`https://nexaid-production.up.railway.app/api/matches/${selectedNeed.id}?volunteer_id=${volunteerId}`);
       setMatchingModalOpen(false);
       fetchData(); // Refresh list to show matched status
     } catch (e) {
@@ -99,24 +99,24 @@ function CoordinatorDashboard() {
       </section>
 
       <section className="mb-12">
-         <div className="flex justify-between items-center mb-6">
-            <h4 className="font-headline text-xl font-bold tracking-tight text-on-surface flex items-center gap-2">
-               <span className="material-symbols-outlined text-primary">public</span>
-               Geographic Command View
-            </h4>
-            <span className="text-[10px] font-bold text-outline uppercase tracking-widest">Real-time Coordination Map</span>
-         </div>
-         <CrisisMap needs={needs} />
+        <div className="flex justify-between items-center mb-6">
+          <h4 className="font-headline text-xl font-bold tracking-tight text-on-surface flex items-center gap-2">
+            <span className="material-symbols-outlined text-primary">public</span>
+            Geographic Command View
+          </h4>
+          <span className="text-[10px] font-bold text-outline uppercase tracking-widest">Real-time Coordination Map</span>
+        </div>
+        <CrisisMap needs={needs} />
       </section>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-surface-container-low p-8 rounded-xl border border-surface-variant group hover:border-primary transition-all">
           <h4 className="font-headline font-bold text-lg mb-4 flex items-center gap-2">
-             <span className="material-symbols-outlined text-primary">diversity_3</span>
-             Volunteer Pool
+            <span className="material-symbols-outlined text-primary">diversity_3</span>
+            Volunteer Pool
           </h4>
           <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-             Our matching engine analyzes available volunteers with specialized medical and logistical skills ready for dispatch.
+            Our matching engine analyzes available volunteers with specialized medical and logistical skills ready for dispatch.
           </p>
           <button onClick={() => setActiveTab('logistics')} className="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-1 group-hover:gap-2 transition-all">
             Manage Logistics <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -124,11 +124,11 @@ function CoordinatorDashboard() {
         </div>
         <div className="bg-surface-container-low p-8 rounded-xl border border-surface-variant group hover:border-primary transition-all">
           <h4 className="font-headline font-bold text-lg mb-4 flex items-center gap-2">
-             <span className="material-symbols-outlined text-primary">analytics</span>
-             Impact Tracking
+            <span className="material-symbols-outlined text-primary">analytics</span>
+            Impact Tracking
           </h4>
           <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-             Average response time has improved by 14.2% since the last automated coordination cycle.
+            Average response time has improved by 14.2% since the last automated coordination cycle.
           </p>
           <a href="/impact" className="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-1 group-hover:gap-2 transition-all">
             View Analytics <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -153,8 +153,8 @@ function CoordinatorDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {needs.length === 0 ? (
           <div className="col-span-full py-24 text-center text-outline flex flex-col items-center gap-4">
-             <span className="material-symbols-outlined text-6xl opacity-20">inventory_2</span>
-             <p>No active needs to resolve. Everything is optimal.</p>
+            <span className="material-symbols-outlined text-6xl opacity-20">inventory_2</span>
+            <p>No active needs to resolve. Everything is optimal.</p>
           </div>
         ) : (
           needs.map(need => (
@@ -170,7 +170,7 @@ function CoordinatorDashboard() {
                 <h5 className="text-lg font-bold text-on-surface line-clamp-1">{need.title || 'Support Needed'}</h5>
               </div>
               <p className="text-on-surface-variant text-sm mb-6 leading-relaxed flex-grow line-clamp-3">
-                {need.description || need.raw_text?.substring(0,100)}...
+                {need.description || need.raw_text?.substring(0, 100)}...
               </p>
               <div className="flex items-center gap-2 mb-6">
                 <span className="material-symbols-outlined text-sm text-primary">location_on</span>
@@ -181,7 +181,7 @@ function CoordinatorDashboard() {
                   <span key={skill} className="bg-surface-container-high text-on-secondary-container px-2 py-1 rounded-sm text-[10px] font-label uppercase tracking-widest">{skill}</span>
                 ))}
               </div>
-              <button 
+              <button
                 onClick={() => handleStartMatching(need)}
                 disabled={need.status === 'matched'}
                 className={`w-full ${need.status === 'matched' ? 'bg-green-100 text-green-700' : 'bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary'} py-3 rounded-md font-label text-[11px] uppercase tracking-[0.15em] font-bold transition-all duration-200`}
@@ -236,14 +236,14 @@ function CoordinatorDashboard() {
 
       <div className="bg-primary/5 p-8 rounded-xl border border-primary/10 flex flex-col md:flex-row items-center gap-8">
         <div className="bg-white p-4 rounded-xl shadow-xl border border-primary/5 rotate-[-2deg]">
-           <span className="material-symbols-outlined text-primary text-5xl">hub</span>
+          <span className="material-symbols-outlined text-primary text-5xl">hub</span>
         </div>
         <div>
-           <h5 className="text-lg font-bold text-on-surface mb-2">Automated Matching Engine</h5>
-           <p className="text-sm text-on-surface-variant mb-4 leading-relaxed max-w-xl">
-             Our AI engine is currently monitoring 12 upcoming deployments. It has pre-calculated the most efficient route and volunteer distribution for the next 24 hours.
-           </p>
-           <button className="bg-primary text-white px-6 py-2 rounded font-label text-[10px] uppercase tracking-widest font-bold hover:bg-primary-container transition-colors">Run Optimization</button>
+          <h5 className="text-lg font-bold text-on-surface mb-2">Automated Matching Engine</h5>
+          <p className="text-sm text-on-surface-variant mb-4 leading-relaxed max-w-xl">
+            Our AI engine is currently monitoring 12 upcoming deployments. It has pre-calculated the most efficient route and volunteer distribution for the next 24 hours.
+          </p>
+          <button className="bg-primary text-white px-6 py-2 rounded font-label text-[10px] uppercase tracking-widest font-bold hover:bg-primary-container transition-colors">Run Optimization</button>
         </div>
       </div>
     </section>
@@ -257,21 +257,21 @@ function CoordinatorDashboard() {
           <p className="text-[10px] font-label uppercase tracking-widest text-outline font-bold">Command Center</p>
         </div>
         <nav className="flex-1 space-y-2 flex sm:flex-row lg:flex-col overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-          <button 
+          <button
             onClick={() => setActiveTab('overview')}
             className={`flex items-center gap-3 p-3 rounded-md transition-all ${activeTab === 'overview' ? 'bg-white text-primary shadow-sm font-bold' : 'text-secondary hover:bg-surface-container-high'}`}
           >
             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: activeTab === 'overview' ? "'FILL' 1" : "'FILL' 0" }}>dashboard</span>
             <span className="font-label text-[10px] uppercase tracking-wider hidden lg:inline">Overview</span>
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('needs')}
             className={`flex items-center gap-3 p-3 rounded-md transition-all ${activeTab === 'needs' ? 'bg-white text-primary shadow-sm font-bold' : 'text-secondary hover:bg-surface-container-high'}`}
           >
             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: activeTab === 'needs' ? "'FILL' 1" : "'FILL' 0" }}>emergency</span>
             <span className="font-label text-[10px] uppercase tracking-wider hidden lg:inline">Live Needs</span>
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('logistics')}
             className={`flex items-center gap-3 p-3 rounded-md transition-all ${activeTab === 'logistics' ? 'bg-white text-primary shadow-sm font-bold' : 'text-secondary hover:bg-surface-container-high'}`}
           >
@@ -288,8 +288,8 @@ function CoordinatorDashboard() {
       <main className="flex-1 p-8 lg:p-12 overflow-y-auto bg-surface">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-40 gap-4">
-             <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-             <p className="text-primary font-bold text-xs uppercase tracking-widest">Indexing Intelligence...</p>
+            <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+            <p className="text-primary font-bold text-xs uppercase tracking-widest">Indexing Intelligence...</p>
           </div>
         ) : (
           <div className="max-w-6xl">
@@ -320,7 +320,7 @@ function CoordinatorDashboard() {
                 <h5 className="font-bold text-on-surface uppercase tracking-widest text-[10px]">AI Recommendations</h5>
                 <button onClick={() => setMatchingModalOpen(false)} className="material-symbols-outlined text-outline hover:text-on-surface">close</button>
               </div>
-              
+
               <div className="space-y-4 min-h-[300px]">
                 {matchingLoading ? (
                   <div className="flex flex-col items-center justify-center h-full py-12 gap-4">
@@ -349,7 +349,7 @@ function CoordinatorDashboard() {
                         </div>
                       </div>
                       <p className="text-[11px] text-on-surface-variant italic mb-4 leading-relaxed">"{sug.reason}"</p>
-                      <button 
+                      <button
                         onClick={() => handleConfirmMatch(sug.volunteer_id)}
                         className="w-full py-2 bg-on-surface text-surface text-[10px] font-bold uppercase tracking-widest rounded-lg sm:opacity-0 group-hover:opacity-100 transition-all hover:bg-primary"
                       >

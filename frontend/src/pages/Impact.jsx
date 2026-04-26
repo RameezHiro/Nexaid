@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { 
+import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, AreaChart, Area
 } from 'recharts';
@@ -19,7 +19,7 @@ function Impact() {
 
   const fetchData = async () => {
     try {
-      const resp = await axios.get('http://127.0.0.1:8000/api/needs/active');
+      const resp = await axios.get('https://nexaid-production.up.railway.app/api/needs/active');
       const data = resp.data.needs || [];
       setNeeds(data);
       processChartData(data);
@@ -154,12 +154,12 @@ function Impact() {
       {/* Main Charts Section */}
       <section className="py-12 px-8">
         <div className="max-w-[1440px] mx-auto grid lg:grid-cols-3 gap-8">
-          
+
           {/* Pie Chart: Resource Distribution */}
           <div className="lg:col-span-1 bg-surface-container-low p-8 rounded-3xl border border-surface-variant">
             <h3 className="text-lg font-bold text-on-surface mb-8 flex items-center gap-2">
-               <span className="material-symbols-outlined text-primary">pie_chart</span>
-               Resource Demand
+              <span className="material-symbols-outlined text-primary">pie_chart</span>
+              Resource Demand
             </h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -177,7 +177,7 @@ function Impact() {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                   />
                   <Legend iconType="circle" />
@@ -189,24 +189,24 @@ function Impact() {
           {/* Bar Chart: Urgency Heatmap */}
           <div className="lg:col-span-2 bg-surface-container-low p-8 rounded-3xl border border-surface-variant">
             <h3 className="text-lg font-bold text-on-surface mb-8 flex items-center gap-2">
-               <span className="material-symbols-outlined text-primary">bar_chart</span>
-               Urgency Intensity Heatmap
+              <span className="material-symbols-outlined text-primary">bar_chart</span>
+              Urgency Intensity Heatmap
             </h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData.urgency}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis 
-                    dataKey="name" 
-                    axisLine={false} 
-                    tickLine={false} 
+                  <XAxis
+                    dataKey="name"
+                    axisLine={false}
+                    tickLine={false}
                     tick={{ fontSize: 10, fontWeight: 'bold' }}
                     className="font-label uppercase tracking-widest"
                   />
                   <YAxis hide />
-                  <Tooltip 
-                     cursor={{ fill: 'rgba(0, 88, 190, 0.05)' }}
-                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                  <Tooltip
+                    cursor={{ fill: 'rgba(0, 88, 190, 0.05)' }}
+                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                   />
                   <Bar dataKey="value" fill="#0058be" radius={[10, 10, 0, 0]} barSize={60} />
                 </BarChart>
@@ -216,58 +216,58 @@ function Impact() {
 
           {/* Area Chart: Coordination Speed */}
           <div className="lg:col-span-3 bg-on-surface text-white p-12 rounded-[40px] shadow-2xl relative overflow-hidden">
-             <div className="relative z-10">
-               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
-                  <div>
-                    <h3 className="text-3xl font-black tracking-tight mb-2">Coordination Velocity</h3>
-                    <p className="text-white/60 text-sm">Response volume vs. successful resolution nodes per cycle.</p>
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
+                <div>
+                  <h3 className="text-3xl font-black tracking-tight mb-2">Coordination Velocity</h3>
+                  <p className="text-white/60 text-sm">Response volume vs. successful resolution nodes per cycle.</p>
+                </div>
+                <div className="flex gap-8">
+                  <div className="flex flex-col">
+                    <span className="text-primary font-black text-2xl">64%</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Avg. Uplift</span>
                   </div>
-                  <div className="flex gap-8">
-                     <div className="flex flex-col">
-                        <span className="text-primary font-black text-2xl">64%</span>
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Avg. Uplift</span>
-                     </div>
-                     <div className="flex flex-col">
-                        <span className="text-white font-black text-2xl">~2.4min</span>
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Dispatch Latency</span>
-                     </div>
+                  <div className="flex flex-col">
+                    <span className="text-white font-black text-2xl">~2.4min</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Dispatch Latency</span>
                   </div>
-               </div>
-               
-               <div className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData.timeline}>
-                      <defs>
-                        <linearGradient id="colorNeeds" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#0058be" stopOpacity={0.8}/>
-                          <stop offset="95%" stopColor="#0058be" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
-                      <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" axisLine={false} tickLine={false} />
-                      <YAxis hide />
-                      <Tooltip />
-                      <Area type="monotone" dataKey="needs" stroke="#0058be" fillOpacity={1} fill="url(#colorNeeds)" />
-                      <Area type="monotone" dataKey="resolved" stroke="#ffffff" fill="transparent" strokeDasharray="5 5" />
-                    </AreaChart>
-                  </ResponsiveContainer>
-               </div>
-             </div>
-             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] opacity-20"></div>
+                </div>
+              </div>
+
+              <div className="h-[300px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData.timeline}>
+                    <defs>
+                      <linearGradient id="colorNeeds" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0058be" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#0058be" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" axisLine={false} tickLine={false} />
+                    <YAxis hide />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="needs" stroke="#0058be" fillOpacity={1} fill="url(#colorNeeds)" />
+                    <Area type="monotone" dataKey="resolved" stroke="#ffffff" fill="transparent" strokeDasharray="5 5" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] opacity-20"></div>
           </div>
         </div>
       </section>
 
       {/* Call to Action */}
       <section className="py-24 px-8">
-         <div className="max-w-4xl mx-auto text-center border border-surface-variant p-16 rounded-[40px] relative overflow-hidden">
-            <h2 className="text-4xl font-bold tracking-tighter mb-6 text-on-surface">Support Global Scale</h2>
-            <p className="text-on-surface-variant mb-10 text-lg">Help us maintain the zero-latency network by contributing your skills or resources.</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/volunteer" className="px-10 py-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20">Volunteer Now</Link>
-              <Link to="/report-need" className="px-10 py-4 border border-surface-variant text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all">Submit Report</Link>
-            </div>
-         </div>
+        <div className="max-w-4xl mx-auto text-center border border-surface-variant p-16 rounded-[40px] relative overflow-hidden">
+          <h2 className="text-4xl font-bold tracking-tighter mb-6 text-on-surface">Support Global Scale</h2>
+          <p className="text-on-surface-variant mb-10 text-lg">Help us maintain the zero-latency network by contributing your skills or resources.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link to="/volunteer" className="px-10 py-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-primary/20">Volunteer Now</Link>
+            <Link to="/report-need" className="px-10 py-4 border border-surface-variant text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all">Submit Report</Link>
+          </div>
+        </div>
       </section>
     </div>
   );
