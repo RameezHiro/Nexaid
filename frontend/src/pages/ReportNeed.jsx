@@ -12,7 +12,7 @@ function ReportNeed() {
     if (!location || !rawText) return;
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/needs/submit', {
+      const response = await axios.post('https://nexaid-production.up.railway.app/api/needs/submit', {
         location: location,
         raw_text: rawText
       });
@@ -32,13 +32,13 @@ function ReportNeed() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-12">
+    <div className="max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12">
       <header className="mb-12 flex flex-col gap-4">
         <Link to="/" className="flex items-center gap-2 text-primary font-medium group">
           <span className="material-symbols-outlined text-lg">arrow_back</span>
           <span className="hover:underline">Back to Dashboard</span>
         </Link>
-        <h1 className="text-4xl font-extrabold text-on-surface tracking-tighter">Report Community Need</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-on-surface tracking-tighter">Report Community Need</h1>
         <p className="text-on-surface-variant max-w-2xl leading-relaxed">Leverage the Gemini AI engine to parse complex community reports and identify actionable logistical needs in seconds.</p>
       </header>
 
@@ -49,34 +49,34 @@ function ReportNeed() {
               <label htmlFor="need-location" className="block font-bold uppercase tracking-wider text-sm text-on-surface-variant mb-2">Location</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">location_on</span>
-                <input 
+                <input
                   id="need-location"
                   type="text"
                   value={location}
                   onChange={e => setLocation(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-surface-container-low border-none rounded-md focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" 
-                  placeholder="e.g. Chembur, Mumbai" 
+                  className="w-full pl-12 pr-4 py-3 bg-surface-container-low border-none rounded-md focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                  placeholder="e.g. Chembur, Mumbai"
                 />
               </div>
             </div>
             <div>
               <label htmlFor="need-survey-data" className="block font-bold uppercase tracking-wider text-sm text-on-surface-variant mb-2">Community Survey Data</label>
-              <textarea 
+              <textarea
                 id="need-survey-data"
                 value={rawText}
                 onChange={e => setRawText(e.target.value)}
-                className="w-full p-4 bg-surface-container-low border-none rounded-md focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all leading-relaxed" 
-                placeholder="Paste your community survey report here..." 
+                className="w-full p-4 bg-surface-container-low border-none rounded-md focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all leading-relaxed"
+                placeholder="Paste your community survey report here..."
                 rows="10">
               </textarea>
             </div>
             <div className="flex justify-end">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={handleAnalyze}
                 disabled={loading}
                 className="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-md font-semibold flex items-center gap-3 hover:opacity-90 transition-all shadow-md disabled:opacity-50">
-                <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>auto_awesome</span>
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
                 {loading ? 'Analyzing...' : 'Analyze with Gemini AI'}
               </button>
             </div>
@@ -134,13 +134,13 @@ function ReportNeed() {
                 <div key={idx} className={`bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col h-full border-l-4 ${uClass.split(' ').find(c => c.startsWith('border-'))}`}>
                   <div className="flex justify-between items-start mb-4">
                     {/* Placeholder icon since we don't have exact mapping, default to toolkit or food */}
-                    <span className="text-3xl">🧩</span> 
-                    <span className={`${uClass.replace(/border-.*/,'')} px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-tighter`}>{need.urgency || 'Normal'}</span>
+                    <span className="text-3xl">🧩</span>
+                    <span className={`${uClass.replace(/border-.*/, '')} px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-tighter`}>{need.urgency || 'Normal'}</span>
                   </div>
                   <h3 className="text-lg font-bold mb-2">{need.title || 'Identified Need'}</h3>
                   <p className="text-sm text-on-surface-variant mb-6 flex-grow leading-relaxed">{need.description}</p>
                   <div className="flex flex-wrap gap-2 pt-4 border-t border-surface-container">
-                    {(need.skills || need.tags || ['General']).slice(0,2).map(skill => (
+                    {(need.skills || need.tags || ['General']).slice(0, 2).map(skill => (
                       <span key={skill} className="bg-surface-container-high text-on-secondary-container px-2 py-1 rounded text-[10px] font-bold">{skill}</span>
                     ))}
                   </div>

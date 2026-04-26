@@ -4,24 +4,24 @@ import { Link } from 'react-router-dom';
 function LandingPage() {
   return (
     <>
-      <section className="relative pt-24 pb-32 px-8 overflow-hidden">
+      <section className="relative pt-24 pb-32 px-4 md:px-8 overflow-hidden">
         <div className="max-w-[1440px] mx-auto grid md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-7 space-y-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-primary font-label text-xs font-bold tracking-widest uppercase">
               System Status: Operational
             </div>
-            <h1 className="text-7xl font-extrabold tracking-tighter leading-[0.95] text-on-surface">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter leading-[0.95] text-on-surface">
               AI-Powered <br /><span className="text-primary">Volunteer</span> <br />Coordination
             </h1>
-            <p className="max-w-xl text-lg text-on-surface-variant leading-relaxed">
+            <p className="max-w-xl text-base md:text-lg text-on-surface-variant leading-relaxed">
               Deploying Gemini AI to transform crisis response into a logistical masterpiece. We bridge the gap between community needs and volunteer capacity with algorithmic precision.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/report-need" className="px-8 py-4 bg-primary bg-linear-to-br from-primary to-primary-container text-on-primary font-semibold rounded-lg shadow-sm hover:opacity-90 transition-all flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
+              <Link to="/report-need" className="w-full sm:w-auto px-8 py-4 bg-primary bg-linear-to-br from-primary to-primary-container text-on-primary font-semibold rounded-lg shadow-sm hover:opacity-90 transition-all flex items-center justify-center gap-2">
                 Report a Need
                 <span className="material-symbols-outlined text-sm">emergency_share</span>
               </Link>
-              <Link to="/volunteer" className="px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+              <Link to="/volunteer" className="w-full sm:w-auto px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-surface-container-low transition-all flex justify-center items-center">
                 Register as Volunteer
               </Link>
             </div>
@@ -45,7 +45,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="py-24 px-8 bg-surface-container-low">
+      <section className="py-24 px-4 md:px-8 bg-surface-container-low">
         <div className="max-w-[1440px] mx-auto">
           <div className="mb-16">
             <h2 className="text-2xl font-bold tracking-tighter text-on-surface uppercase mb-2">Technical Core</h2>
@@ -86,7 +86,7 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="py-24 px-8 overflow-hidden bg-background">
+      <section className="py-24 px-4 md:px-8 overflow-hidden bg-background">
         <div className="max-w-[1440px] mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="order-2 md:order-1 grid grid-cols-2 gap-4">
             <div className="aspect-square bg-surface-container-highest rounded-lg overflow-hidden">
@@ -97,7 +97,7 @@ function LandingPage() {
             </div>
           </div>
           <div className="order-1 md:order-2 space-y-6">
-            <h2 className="text-5xl font-black tracking-tighter text-on-surface">Data-Driven Philanthropy</h2>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-on-surface">Data-Driven Philanthropy</h2>
             <p className="text-lg text-on-surface-variant leading-relaxed">
               We don't just find volunteers; we build resilience. By utilizing the Google Gemini API, we ensure that every second donated is directed toward the highest impact area.
             </p>
@@ -121,14 +121,14 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="py-20 px-8">
-        <div className="max-w-[1440px] mx-auto bg-on-surface p-12 md:p-24 rounded-xl text-white relative overflow-hidden">
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-[1440px] mx-auto bg-on-surface p-8 md:p-24 rounded-xl text-white relative overflow-hidden">
           <div className="relative z-10 max-w-2xl">
-            <h2 className="text-5xl font-bold tracking-tighter mb-6">Ready to lead the bridge?</h2>
-            <p className="text-xl text-white/70 mb-10 leading-relaxed">Join 500+ organizations using algorithmic coordination to scale their community impact.</p>
-            <div className="flex flex-wrap gap-4">
-              <button className="px-10 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary-container transition-all">Get Started Today</button>
-              <button className="px-10 py-4 border-2 border-white/20 text-white font-bold rounded-lg hover:bg-white/10 transition-all">Contact Sales</button>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-4 md:mb-6">Ready to lead the bridge?</h2>
+            <p className="text-lg md:text-xl text-white/70 mb-8 md:mb-10 leading-relaxed">Join 500+ organizations using algorithmic coordination to scale their community impact.</p>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+              <button className="w-full sm:w-auto px-10 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary-container transition-all">Get Started Today</button>
+              <button className="w-full sm:w-auto px-10 py-4 border-2 border-white/20 text-white font-bold rounded-lg hover:bg-white/10 transition-all">Contact Sales</button>
             </div>
           </div>
           <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-primary/20 to-transparent flex items-center justify-center opacity-30">

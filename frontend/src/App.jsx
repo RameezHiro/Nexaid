@@ -24,7 +24,7 @@ function Navbar() {
 
   return (
     <header className="w-full top-0 sticky z-50 bg-background dark:bg-slate-950 border-none">
-      <nav className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
+      <nav className="flex justify-between items-center px-4 md:px-8 py-4 max-w-[1440px] mx-auto">
         <Link to="/" className="text-xl font-bold text-on-surface dark:text-slate-100 font-headline tracking-tighter">
           Nexaid
         </Link>
@@ -34,7 +34,7 @@ function Navbar() {
           <Link to="/volunteer" className="text-on-surface dark:text-slate-400 hover:text-[#0058be] font-label text-sm uppercase tracking-wider transition-colors duration-200">Volunteer</Link>
           <Link to="/impact" className="text-on-surface dark:text-slate-400 hover:text-[#0058be] font-label text-sm uppercase tracking-wider transition-colors duration-200">Impact</Link>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           {currentUser ? (
             <>
               <span className="text-[10px] font-bold text-outline uppercase tracking-widest hidden lg:inline">{currentUser.email}</span>
@@ -60,7 +60,7 @@ function Navbar() {
 function Footer() {
   return (
     <footer className="w-full py-12 bg-[#111c2d] dark:bg-black">
-      <div className="flex flex-col md:flex-row justify-between items-center px-12 border-t border-slate-800 max-w-[1440px] mx-auto pt-12 space-y-8 md:space-y-0">
+      <div className="flex flex-col md:flex-row justify-between items-center px-4 md:px-12 border-t border-slate-800 max-w-[1440px] mx-auto pt-12 space-y-8 md:space-y-0">
         <div className="flex flex-col items-center md:items-start gap-2">
           <div className="text-white font-bold text-xl">Nexaid</div>
           <p className="text-slate-400 font-body text-sm">© 2026 Nexaid. Algorithmic Coordination.</p>

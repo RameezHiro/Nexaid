@@ -23,7 +23,7 @@ function VolunteerRegistration() {
     if (!name || !location || skills.length === 0) return;
     setLoading(true);
     try {
-      const resp = await axios.post('http://127.0.0.1:8000/api/volunteers/register', {
+      const resp = await axios.post('https://nexaid-production.up.railway.app/api/volunteers/register', {
         name,
         location,
         skills,
@@ -50,11 +50,11 @@ function VolunteerRegistration() {
 
   return (
     <>
-      <main className="max-w-[1440px] mx-auto px-8 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
         <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
           <div className="space-y-2">
             <p className="text-primary font-label text-xs uppercase tracking-[0.2em] font-bold">Coordination Infrastructure</p>
-            <h1 className="text-on-surface font-headline text-[3.5rem] leading-none font-extrabold tracking-tighter">Register as Volunteer</h1>
+            <h1 className="text-on-surface font-headline text-4xl md:text-[3.5rem] leading-none font-extrabold tracking-tighter">Register as Volunteer</h1>
           </div>
           <p className="text-on-surface-variant text-base leading-relaxed max-w-md">
             Join our algorithmic coordination network. We transform logistics into impact by matching precision skills with urgent humanitarian needs. Your expertise is the engine of our response system.
