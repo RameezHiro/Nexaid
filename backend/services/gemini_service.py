@@ -46,7 +46,6 @@ def extract_needs(raw_text: str, location: str) -> list:
         contents=prompt
     )
     text = response.text.strip()
-    # Strip markdown if present
     if text.startswith("```"):
         text = text.split("```")[1]
         if text.startswith("json"):
@@ -80,7 +79,7 @@ def match_volunteer(need: dict, volunteers: list) -> dict:
     Order by match_score descending.
     """
     response = client.models.generate_content(
-        model="gemini-1.5-flash",
+        model="gemini-2.0-flash",  # Fixed: was gemini-1.5-flash
         contents=prompt
     )
     text = response.text.strip()
@@ -111,7 +110,7 @@ def get_dashboard_summary(needs: list) -> dict:
     }}
     """
     response = client.models.generate_content(
-        model="gemini-1.5-flash",
+        model="gemini-2.0-flash",  # Fixed: was gemini-1.5-flash
         contents=prompt
     )
     text = response.text.strip()
