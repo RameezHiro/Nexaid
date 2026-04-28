@@ -42,7 +42,7 @@ def extract_needs(raw_text: str, location: str) -> list:
                 transport, education, other
     """
     response = client.models.generate_content(
-        "gemini-2.0-flash-lite",
+        model="gemini-2.0-flash-lite",
         contents=prompt
     )
     text = response.text.strip()
@@ -79,7 +79,7 @@ def match_volunteer(need: dict, volunteers: list) -> dict:
     Order by match_score descending.
     """
     response = client.models.generate_content(
-        "gemini-2.0-flash-lite",  # Fixed: was gemini-1.5-flash
+        model="gemini-2.0-flash-lite",  # Fixed: was gemini-1.5-flash
         contents=prompt
     )
     text = response.text.strip()
@@ -110,7 +110,7 @@ def get_dashboard_summary(needs: list) -> dict:
     }}
     """
     response = client.models.generate_content(
-        "gemini-2.0-flash-lite",  # Fixed: was gemini-1.5-flash
+        model="gemini-2.0-flash-lite",  # Fixed: was gemini-1.5-flash
         contents=prompt
     )
     text = response.text.strip()
