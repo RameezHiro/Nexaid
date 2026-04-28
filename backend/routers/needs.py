@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from services.firebase_service import add_document, get_documents, update_document
 from services.gemini_service import extract_needs, get_dashboard_summary
 from datetime import datetime
+import traceback
 
 router = APIRouter()
 
@@ -15,6 +16,7 @@ async def submit_need(submission: NeedSubmission):
     try:
         extracted = extract_needs(submission.raw_text, submission.location)
     except Exception as e:
+        traceback.print_exc(   )
         raise HTTPException(status_code=500, detail=str(e))
     
     saved_needs = []
